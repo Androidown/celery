@@ -394,6 +394,7 @@ def build_tracer(name, task, loader=None, hostname=None, store_errors=True,
                     send_prerun(sender=task, task_id=uuid, task=task,
                                 args=args, kwargs=kwargs)
                 loader_task_init(uuid, task)
+                task_request.log(task_request.id, "----pre run-----")
                 if track_started:
                     store_result(
                         uuid, {'pid': pid, 'hostname': hostname}, STARTED,
@@ -497,6 +498,7 @@ def build_tracer(name, task, loader=None, hostname=None, store_errors=True,
                         )
             finally:
                 try:
+                    task_request.log(task_request.id, "----post run-----")
                     if postrun_receivers:
                         send_postrun(sender=task, task_id=uuid, task=task,
                                      args=args, kwargs=kwargs,

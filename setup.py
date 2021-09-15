@@ -152,7 +152,7 @@ class pytest(setuptools.command.test.test):
 
 meta = parse_dist_meta()
 setuptools.setup(
-    name=NAME,
+    name="dp-" + NAME,
     packages=setuptools.find_packages(exclude=['t', 't.*']),
     version=meta['version'],
     description=meta['doc'],

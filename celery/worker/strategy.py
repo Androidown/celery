@@ -123,6 +123,7 @@ def default(task, app, consumer,
     handle = consumer.on_task_request
     limit_task = consumer._limit_task
     limit_post_eta = consumer._limit_post_eta
+    log = consumer.log
     Request = symbol_by_name(task.Request)
     Req = create_request_cls(Request, task, consumer.pool, hostname, eventer)
 
@@ -145,7 +146,7 @@ def default(task, app, consumer,
             message,
             on_ack=ack, on_reject=reject, app=app, hostname=hostname,
             eventer=eventer, task=task, connection_errors=connection_errors,
-            body=body, headers=headers, decoded=decoded, utc=utc,
+            body=body, headers=headers, decoded=decoded, utc=utc, log=log
         )
         if _does_info:
             info('Received task: %s', req)

@@ -79,7 +79,7 @@ class Request:
             '_on_ack', '_body', '_hostname', '_eventer', '_connection_errors',
             '_task', '_eta', '_expires', '_request_dict', '_on_reject', '_utc',
             '_content_type', '_content_encoding', '_argsrepr', '_kwargsrepr',
-            '_args', '_kwargs', '_decoded', '__payload',
+            '_args', '_kwargs', '_decoded', '__payload', '_log'
             '__weakref__', '__dict__',
         )
 
@@ -89,7 +89,9 @@ class Request:
                  task=None, on_reject=noop, body=None,
                  headers=None, decoded=False, utc=True,
                  maybe_make_aware=maybe_make_aware,
-                 maybe_iso8601=maybe_iso8601, **opts):
+                 maybe_iso8601=maybe_iso8601,
+                 log=None,
+                 **opts):
         self._message = message
         self._request_dict = message.headers if headers is None else headers
         self._body = message.body if body is None else body
@@ -163,6 +165,11 @@ class Request:
         self._request_dict['args'], self._request_dict['kwargs'], _ = self.__payload
         self._args = self._request_dict['args']
         self._kwargs = self._request_dict['kwargs']
+        self._log = log
+
+    @property
+    def log(self):
+        return self._log or (lambda *args, **kwargs: None)
 
     @property
     def delivery_info(self):

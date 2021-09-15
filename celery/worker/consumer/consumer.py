@@ -147,6 +147,7 @@ class Consumer:
             'celery.worker.consumer.tasks:Tasks',
             'celery.worker.consumer.consumer:Evloop',
             'celery.worker.consumer.agent:Agent',
+            'celery.worker.consumer.log:LogStep',
         ]
 
         def shutdown(self, parent):
